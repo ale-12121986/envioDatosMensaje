@@ -35,13 +35,26 @@ class EnviarMensaje{
       }
       mySerial.println("AT+CMGF=1"); // Configurando modo texto
       while (mySerial.readString() =="OK") {
-        mySerial.println("AT+CMGF=1");
+        delay(10);
+        contador++;
+        if(contador == 50){
+          mySerial.println("AT+CMGF=1");
           contador = 0;
           respuesta = "";
+        }
       }
       mySerial.println("AT+CMGS=\"+ZZxxxxxxxxxx\"");//cambia ZZ  código del país y xxxxxxxxxxx con el número de teléfono a sms
       updateSerial();
-      mySerial.println("AT+CNMI=1,2,0,0,0"); // Se  configura como se van a recibir los mensajes  
+      mySerial.println("AT+CNMI=1,2,0,0,0"); // Se  configura como se van a recibir los mensajes 
+      while (mySerial.readString() =="OK") {
+        delay(10);
+        contador++;
+        if(contador == 50){
+          mySerial.println("AT+CNMI=1,2,0,0,0");
+          contador = 0;
+          respuesta = "";
+        }
+      } 
     }
 
   public:
@@ -50,7 +63,7 @@ class EnviarMensaje{
       configurarDatosMensajes();
     }
     void enviarMensajeTexto(String mensaje){
-      
+      configurarDatosMensajes();
       mySerial.print(mensaje); //contenido del texto
       updateSerial();
       //mySerial.write(26);
