@@ -16,23 +16,22 @@ char vectorChar[20];
 bool mensajeEnviado = false, finCadena = false;
 EnviarMensaje enviarMensaje;
 
-void serialEvent(){
-  //Recepción de datos Seriales
-  while (Serial.available()) {              //Si existen datos seriales, leer a todos
-    char CaracterEntrada = Serial.read();   //Leer 1 byte serial recibido
+// void serialEvent(){
+//   //Recepción de datos Seriales
+//   while (Serial.available()) {              //Si existen datos seriales, leer a todos
+//     char CaracterEntrada = Serial.read();   //Leer 1 byte serial recibido
    
-    cadenaCharEntrada += CaracterEntrada;   //Agregar el nuevo char a una cadena String 
-    if (CaracterEntrada == '\n') {          //Si el char o byte recibido es un fin de linea, activa la bandera
-      finCadena = true;                        //Si la bandera finCadena = 1, entonces la transmision esta completa
-    }  
-  }
+//     cadenaCharEntrada += CaracterEntrada;   //Agregar el nuevo char a una cadena String 
+//     if (CaracterEntrada == '\n') {          //Si el char o byte recibido es un fin de linea, activa la bandera
+//       finCadena = true;                        //Si la bandera finCadena = 1, entonces la transmision esta completa
+//     }  
+//   }
   
-}
+// }
 
 void setup() {
   // put your setup code here, to run once:
-  
-  mySerial.begin(9600);
+  //mySerial.begin(9600);
   pinMode(fallaEncendido, INPUT);
   pinMode(senalR, INPUT);
   pinMode(senalS, INPUT);
@@ -41,10 +40,11 @@ void setup() {
   Serial.begin(9600);
   enviarMensaje.configurar();
   cadenaCharEntrada.reserve(20);
-  
+  Serial.println("envio demensajes activado");
 }
 
 void loop() {
+  //Serial.println("envio demensajes activado");
   // put your main code here, to run repeatedly: 
   if((digitalRead(senalR))&&(senalRAnterior == 0)) {
     senalRAnterior = 1;
@@ -56,7 +56,7 @@ void loop() {
     senalRAnterior = 0;
     senalSAnterior = 1;
     senalTAnterior = 0;
-    enviarMensaje.enviarMensajeTexto("Se trabaja con la la fase S");
+    //enviarMensaje.enviarMensajeTexto("Se trabaja con la la fase S");
   //statements
   } 
   else if((digitalRead(senalT))&&(senalTAnterior == 0)) {
@@ -69,7 +69,7 @@ void loop() {
   if(digitalRead(fallaEncendido) == HIGH){
     if(mensajeEnviado == true){
       mensajeEnviado = true;
-      enviarMensaje.enviarMensajeTexto("falla en el encendido");
+    enviarMensaje.enviarMensajeTexto("falla en el encendido");
     }    
   }
 }
