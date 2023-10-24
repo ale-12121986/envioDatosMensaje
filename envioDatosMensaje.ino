@@ -44,15 +44,18 @@ void setup() {
 }
 
 void loop() {
+  enviarMensaje.recibirMensaje();
   //Serial.println("envio demensajes activado");
   // put your main code here, to run repeatedly: 
   if((digitalRead(senalR))&&(senalRAnterior == 0)) {
+    Serial.println("entro a ver señal R");
     senalRAnterior = 1;
     senalSAnterior = 0;
     senalTAnterior = 0;
     enviarMensaje.enviarMensajeTexto("Se trabaja con la la fase R");
   } 
   else if((digitalRead(senalS))&&(senalSAnterior == 0)) {
+    Serial.println("entro a ver señal S");
     senalRAnterior = 0;
     senalSAnterior = 1;
     senalTAnterior = 0;
@@ -60,6 +63,7 @@ void loop() {
   //statements
   } 
   else if((digitalRead(senalT))&&(senalTAnterior == 0)) {
+    Serial.println("entro a ver señal T");
     senalRAnterior = 0;
     senalSAnterior = 0;
     senalTAnterior = 1;

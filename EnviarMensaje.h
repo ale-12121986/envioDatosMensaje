@@ -1,3 +1,4 @@
+#include "HardwareSerial.h"
 #include "WString.h"
 #include "SoftwareSerial.h"
 #include "pins_arduino.h"
@@ -48,18 +49,17 @@ class EnviarMensaje{
         respuesta = recepcionSerial();
       }
       mySerial.println("AT+CMGS=\"+543584315941\"");//cambia ZZ  código del país y xxxxxxxxxxx con el número de teléfono a sms
-      delay(100);
-      respuesta = recepcionSerial();
-      delay(100);
+      delay(500);
       respuesta = recepcionSerial();
       mySerial.println("AT+CNMI=1,2,0,0,0"); // Se  configura como se van a recibir los mensajes 
-      delay(100);
+      delay(500);
       respuesta = recepcionSerial();
       while(strcmp(respuesta.c_str(), "OK") == 0) {
         mySerial.println("AT+CNMI=1,2,0,0,0"); //una vez que las pruebas están hechas exitosamente, regresará un OK
         delay(100);
         respuesta = recepcionSerial();
       }
+      
     }
 
   public:
@@ -71,8 +71,12 @@ class EnviarMensaje{
       Serial.println("empieza el envio de mensajes");
       configurarMensajes();
       mySerial.print(mensaje); //contenido del texto
-      //updateSerial();
-      //mySerial.write(26);
+      respuesta = recepcionSerial();
+      Serial.println(respuesta);
+      mySerial.write(26);
+      
     }
-    
+    void recibirMensaje(){
+      respuesta = recepcionSerial();
+    }
 };
