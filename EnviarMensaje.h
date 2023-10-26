@@ -48,9 +48,7 @@ class EnviarMensaje{
         delay(100);
         respuesta = recepcionSerial();
       }
-      mySerial.println("AT+CMGS=\"+543584315941\"");//cambia ZZ  código del país y xxxxxxxxxxx con el número de teléfono a sms
-      delay(500);
-      respuesta = recepcionSerial();
+     
       mySerial.println("AT+CNMI=1,2,0,0,0"); // Se  configura como se van a recibir los mensajes 
       delay(500);
       respuesta = recepcionSerial();
@@ -70,6 +68,9 @@ class EnviarMensaje{
     void enviarMensajeTexto(String mensaje){
       Serial.println("empieza el envio de mensajes");
       configurarMensajes();
+      mySerial.println("AT+CMGS=\"+543584315941\"");//cambia ZZ  código del país y xxxxxxxxxxx con el número de teléfono a sms
+      delay(500);
+      respuesta = recepcionSerial();
       mySerial.print(mensaje); //contenido del texto
       respuesta = recepcionSerial();
       Serial.println(respuesta);
@@ -78,5 +79,10 @@ class EnviarMensaje{
     }
     void recibirMensaje(){
       respuesta = recepcionSerial();
+      int valorRecibido =respuesta.indexOf("+CMT");
+      if (valorRecibido>-1) {
+        Serial.println(valorRecibido);
+      }
+      //Serial.println(valorRecibido);
     }
 };

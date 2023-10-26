@@ -16,19 +16,6 @@ char vectorChar[20];
 bool mensajeEnviado = false, finCadena = false;
 EnviarMensaje enviarMensaje;
 
-// void serialEvent(){
-//   //Recepción de datos Seriales
-//   while (Serial.available()) {              //Si existen datos seriales, leer a todos
-//     char CaracterEntrada = Serial.read();   //Leer 1 byte serial recibido
-   
-//     cadenaCharEntrada += CaracterEntrada;   //Agregar el nuevo char a una cadena String 
-//     if (CaracterEntrada == '\n') {          //Si el char o byte recibido es un fin de linea, activa la bandera
-//       finCadena = true;                        //Si la bandera finCadena = 1, entonces la transmision esta completa
-//     }  
-//   }
-  
-// }
-
 void setup() {
   // put your setup code here, to run once:
   //mySerial.begin(9600);
@@ -45,8 +32,6 @@ void setup() {
 
 void loop() {
   enviarMensaje.recibirMensaje();
-  //Serial.println("envio demensajes activado");
-  // put your main code here, to run repeatedly: 
   if((digitalRead(senalR))&&(senalRAnterior == 0)) {
     Serial.println("entro a ver señal R");
     senalRAnterior = 1;
@@ -59,7 +44,7 @@ void loop() {
     senalRAnterior = 0;
     senalSAnterior = 1;
     senalTAnterior = 0;
-    //enviarMensaje.enviarMensajeTexto("Se trabaja con la la fase S");
+    enviarMensaje.enviarMensajeTexto("Se trabaja con la la fase S");
   //statements
   } 
   else if((digitalRead(senalT))&&(senalTAnterior == 0)) {
@@ -71,9 +56,12 @@ void loop() {
   //statements
   }
   if(digitalRead(fallaEncendido) == HIGH){
+    Serial.print("hay falla al encender el generador");
     if(mensajeEnviado == true){
       mensajeEnviado = true;
     enviarMensaje.enviarMensajeTexto("falla en el encendido");
     }    
   }
+
+  
 }
