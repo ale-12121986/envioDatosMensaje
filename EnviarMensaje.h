@@ -6,28 +6,25 @@
 SoftwareSerial mySerial(3, 2);
 class EnviarMensaje{
   private:
+    const int encenderMotor = 8;
     int contador =0;
     String respuesta="";
+    String mensaje="";
     //Se envian los mensajes por puerto serial al modulo sim800l
     String recepcionSerial(){
       while(mySerial.available()) {
        String respuesta = mySerial.readStringUntil('\n');
         Serial.println(respuesta);
+        int valorRecibido = respuesta.indexOf("+");
+        if (valorRecibido > -1) {
+         mensaje = mySerial.readStringUntil('\n');
+         Serial.println("el mensaje es");
+         Serial.println(mensaje);
+        }
       }
       return respuesta;
     }
 
-    // void updateSerial(){
-    //   delay(500);
-    //   while (Serial.available()) 
-    //   {
-    //     mySerial.write(Serial.read());//reenvía lo que ha recibido el puerto del software serial 
-    //   }
-    //   while(mySerial.available()) 
-    //   {
-    //     Serial.write(mySerial.read());//reenvía el software serial recibido al puerto serial 
-    //   }
-    // }
     //Se configura con conmando AT para el envio de mensaje de texto
     void configurarMensajes(){
       Serial.println("entro a configurar mensaje");
@@ -41,16 +38,15 @@ class EnviarMensaje{
       }
       //respuesta="";
       mySerial.println("AT+CMGF=1"); // Configurando modo texto
-      delay(100);
+      delay(500);
       respuesta = recepcionSerial();
       while(strcmp(respuesta.c_str(), "OK") == 0) {
         mySerial.println("AT+CMGF=1"); //una vez que las pruebas están hechas exitosamente, regresará un OK
         delay(100);
         respuesta = recepcionSerial();
       }
-     
       mySerial.println("AT+CNMI=1,2,0,0,0"); // Se  configura como se van a recibir los mensajes 
-      delay(500);
+      delay(100);
       respuesta = recepcionSerial();
       while(strcmp(respuesta.c_str(), "OK") == 0) {
         mySerial.println("AT+CNMI=1,2,0,0,0"); //una vez que las pruebas están hechas exitosamente, regresará un OK
@@ -59,10 +55,21 @@ class EnviarMensaje{
       }
       
     }
+    void accionesMensajes(int valor){
+      switch (valor) {
+      case 1:
+        Serial.println("Se enciende el motor");
+        digitalWrite(encenderMotor, HIGH);
+        delay(5000);
+        digitalWrite(encenderMotor, LOW);
+        break;
+      }
+    }
 
   public:
     void configurar(){
       mySerial.begin(9600);
+      pinMode(encenderMotor, OUTPUT);
       configurarMensajes();
     }
     void enviarMensajeTexto(String mensaje){
@@ -79,10 +86,6 @@ class EnviarMensaje{
     }
     void recibirMensaje(){
       respuesta = recepcionSerial();
-      int valorRecibido =respuesta.indexOf("+CMT");
-      if (valorRecibido>-1) {
-        Serial.println(valorRecibido);
-      }
-      //Serial.println(valorRecibido);
+      accionesMensajes(respuesta.toInt());
     }
 };
