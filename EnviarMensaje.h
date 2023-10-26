@@ -56,12 +56,14 @@ class EnviarMensaje{
       
     }
     void accionesMensajes(int valor){
+      //Serial.println("entro en accionesMensajes");
       switch (valor) {
       case 1:
         Serial.println("Se enciende el motor");
         digitalWrite(encenderMotor, HIGH);
         delay(5000);
         digitalWrite(encenderMotor, LOW);
+        mensaje ="";
         break;
       }
     }
@@ -86,6 +88,6 @@ class EnviarMensaje{
     }
     void recibirMensaje(){
       respuesta = recepcionSerial();
-      accionesMensajes(respuesta.toInt());
+      accionesMensajes(mensaje.toInt());
     }
 };
