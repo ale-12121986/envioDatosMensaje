@@ -64,6 +64,7 @@ class EnviarMensaje{
         delay(5000);
         digitalWrite(encenderMotor, LOW);
         mensaje ="";
+        enviarMensajeTexto("se enciende el generador");
         break;
       }
     }
