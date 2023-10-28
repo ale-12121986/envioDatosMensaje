@@ -6,7 +6,9 @@
 SoftwareSerial mySerial(3, 2);
 class EnviarMensaje{
   private:
-    const int encenderMotor = 8;
+    const int encenderMotor = 9;
+    const int prueba = 10;
+    
     int contador =0;
     String respuesta="";
     String mensaje="";
@@ -65,6 +67,18 @@ class EnviarMensaje{
         digitalWrite(encenderMotor, LOW);
         mensaje ="";
         break;
+
+        case 2:
+        Serial.println("Prueba");
+        digitalWrite(prueba, HIGH);
+        mensaje ="";
+        break;
+
+        case 3:
+        Serial.println("Prueba");
+        digitalWrite(prueba, LOW);
+        mensaje ="";
+        break;
       }
     }
 
@@ -77,7 +91,7 @@ class EnviarMensaje{
     void enviarMensajeTexto(String mensaje){
       Serial.println("empieza el envio de mensajes");
       configurarMensajes();
-      mySerial.println("AT+CMGS=\"+543584315941\"");//cambia ZZ  código del país y xxxxxxxxxxx con el número de teléfono a sms
+      mySerial.println("AT+CMGS=\"+2215243497\"");//cambia ZZ  código del país y xxxxxxxxxxx con el número de teléfono a sms
       delay(500);
       respuesta = recepcionSerial();
       mySerial.print(mensaje); //contenido del texto
