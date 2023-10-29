@@ -8,10 +8,10 @@ class EnviarMensaje{
   private:
     const int encenderMotor = 9;
     const int prueba = 10;
-    
     int contador =0;
     String respuesta="";
     String mensaje="";
+    String numeroTelefono = "";
     //Se envian los mensajes por puerto serial al modulo sim800l
     String recepcionSerial(){
       while(mySerial.available()) {
@@ -19,9 +19,11 @@ class EnviarMensaje{
         Serial.println(respuesta);
         int valorRecibido = respuesta.indexOf("+");
         if (valorRecibido > -1) {
-         mensaje = mySerial.readStringUntil('\n');
-         Serial.println("el mensaje es");
-         Serial.println(mensaje);
+          numeroTelefono = respuesta.substring(7, 18);
+          Serial.println(numeroTelefono);
+          mensaje = mySerial.readStringUntil('\n');
+          Serial.println("el mensaje es");
+          Serial.println(mensaje);
         }
       }
       return respuesta;
@@ -66,7 +68,7 @@ class EnviarMensaje{
         delay(5000);
         digitalWrite(encenderMotor, LOW);
         mensaje ="";
-        enviarMensajeTexto("se enciende el generador");
+        enviarMensajeTexto("Generador encendido");
         break;
 
         case 2:
@@ -103,6 +105,7 @@ class EnviarMensaje{
     }
     void recibirMensaje(){
       respuesta = recepcionSerial();
+      
       accionesMensajes(mensaje.toInt());
     }
 };

@@ -21,10 +21,10 @@ EnviarMensaje enviarMensaje;
 void setup() {
   // put your setup code here, to run once:
   pinMode(fallaEncendido, INPUT);
-  pinMode(senalR, INPUT);
-  pinMode(senalS, INPUT);
-  pinMode(senalT, INPUT);
-  pinMode(marcha, INPUT);
+  pinMode(senalR, INPUT_PULLUP);
+  pinMode(senalS, INPUT_PULLUP);
+  pinMode(senalT, INPUT_PULLUP);
+  pinMode(marcha, INPUT_PULLUP);
 
   Serial.begin(9600);
   enviarMensaje.configurar();
@@ -78,6 +78,4 @@ void loop() {
     fallaEncendidoAnterior = 1;
     enviarMensaje.enviarMensajeTexto("falla en el encendido");
   }
-
-  
 }
