@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="titulo">Comunicacion con el generador</string>
+    <string name="mensajeGenerador">Se encendio el generador</string>
+    <string name="mensajeInicio">Se inicio prueba</string>
+    <string name="mensajeFin">Se detuvo la prueba</string>
+    <string name="boton1">Encender generador</string>
+    <string name="boton2">Iniciar prueba</string>
+    <string name="boton3">Detener prueba</string>
+</resources>
