@@ -64,22 +64,22 @@ class EnviarMensaje{
       switch (valor) {
       case 1:
         Serial.println("Se enciende el motor");
-        digitalWrite(encenderMotor, HIGH);
-        delay(5000);
         digitalWrite(encenderMotor, LOW);
+        delay(5000);
+        digitalWrite(encenderMotor, HIGH);
         mensaje ="";
-        enviarMensajeTexto("Generador encendido");
+        //enviarMensajeTexto("Generador encendido");
         break;
 
         case 2:
-        Serial.println("Prueba");
-        digitalWrite(prueba, HIGH);
+        Serial.println("Prueba encendio");
+        digitalWrite(prueba, LOW);
         mensaje ="";
         break;
 
         case 3:
-        Serial.println("Prueba");
-        digitalWrite(prueba, LOW);
+        Serial.println("Prueba apago");
+        digitalWrite(prueba, HIGH);
         mensaje ="";
         break;
       }
@@ -90,11 +90,23 @@ class EnviarMensaje{
       mySerial.begin(9600);
       pinMode(encenderMotor, OUTPUT);
       configurarMensajes();
+      pinMode(prueba, OUTPUT);
+      digitalWrite(encenderMotor, HIGH);
+      digitalWrite(prueba, HIGH);
     }
     void enviarMensajeTexto(String mensaje){
       Serial.println("empieza el envio de mensajes");
       configurarMensajes();
       mySerial.println("AT+CMGS=\"+2215243497\"");//cambia ZZ  código del país y xxxxxxxxxxx con el número de teléfono a sms
+      delay(500);
+      respuesta = recepcionSerial();
+      mySerial.print(mensaje); //contenido del texto
+      respuesta = recepcionSerial();
+      Serial.println(respuesta);
+      mySerial.write(26);
+      Serial.println("Se envia seguno mensaje");
+      configurarMensajes();
+      mySerial.println("AT+CMGS=\"+2215688347\"");//cambia ZZ  código del país y xxxxxxxxxxx con el número de teléfono a sms
       delay(500);
       respuesta = recepcionSerial();
       mySerial.print(mensaje); //contenido del texto

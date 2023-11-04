@@ -35,7 +35,7 @@ void setup() {
 void loop() {
   enviarMensaje.recibirMensaje();
   if(digitalRead(senalR)== LOW && senalRAnterior == 0) {
-    Serial.println("entro a ver señal R");
+    Serial.println("Se trabaja en fase R");
     senalRAnterior = 1;
     senalSAnterior = 0;
     senalTAnterior = 0;
@@ -43,7 +43,7 @@ void loop() {
     enviarMensaje.enviarMensajeTexto("Se trabaja con la la fase R");
   } 
   else if(digitalRead(senalS) == LOW && senalSAnterior == 0) {
-    Serial.println("entro a ver señal S");
+    Serial.println("Se trabaja en fase S");
     senalRAnterior = 0;
     senalSAnterior = 1;
     senalTAnterior = 0;
@@ -58,7 +58,7 @@ void loop() {
     senalTAnterior = 1;
     marchaAnterior = 0;
     fallaEncendidoAnterior = 0;
-    enviarMensaje.enviarMensajeTexto("Se trabaja con la la fase T");
+    enviarMensaje.enviarMensajeTexto("Se trabaja en fase T");
   }
   if(digitalRead(marcha) == LOW && marchaAnterior == 0) {
     Serial.println("entro a ver señal T");
@@ -76,6 +76,6 @@ void loop() {
     senalTAnterior = 0;
     marchaAnterior = 0;
     fallaEncendidoAnterior = 1;
-    enviarMensaje.enviarMensajeTexto("falla en el encendido");
+    enviarMensaje.enviarMensajeTexto("falla encendido generador");
   }
 }
