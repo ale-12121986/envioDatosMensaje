@@ -40,7 +40,7 @@ void loop() {
     senalSAnterior = 0;
     senalTAnterior = 0;
     marchaAnterior = 0;
-    enviarMensaje.enviarMensajeTexto("Se trabaja con la la fase R");
+    enviarMensaje.enviarMensajeTexto("Se trabaja con la fase R");
   } 
   else if(digitalRead(senalS) == LOW && senalSAnterior == 0) {
     Serial.println("Se trabaja en fase S");
@@ -49,7 +49,7 @@ void loop() {
     senalTAnterior = 0;
     marchaAnterior = 0;
     fallaEncendidoAnterior = 0;
-    enviarMensaje.enviarMensajeTexto("Se trabaja con la la fase S");
+    enviarMensaje.enviarMensajeTexto("Se trabaja con la fase S");
   } 
   else if(digitalRead(senalT) == LOW && senalTAnterior == 0) {
     Serial.println("entro a ver señal T");
@@ -58,7 +58,7 @@ void loop() {
     senalTAnterior = 1;
     marchaAnterior = 0;
     fallaEncendidoAnterior = 0;
-    enviarMensaje.enviarMensajeTexto("Se trabaja en fase T");
+    enviarMensaje.enviarMensajeTexto("Se trabaja con la fase T");
   }
   if(digitalRead(marcha) == LOW && marchaAnterior == 0) {
     Serial.println("entro a ver señal T");
